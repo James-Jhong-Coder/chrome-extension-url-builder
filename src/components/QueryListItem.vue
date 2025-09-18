@@ -12,13 +12,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  // queryItem: (): QueryItem => ({
-  //   id: '',
-  //   key: '',
-  //   value: '',
-  //   canDelete: true,
-  // }),
-  // errorMessage: '',
+  errorMessage: '',
 });
 
 const emit = defineEmits<{
@@ -33,10 +27,7 @@ const onInputHandler = <K extends EditableKey>(payload: UpdatePayload<K>) => {
     [key]: value,
   };
   delete newQuery['canDelete'];
-  emit('onUpdateQueryItem', {
-    ...props.queryItem,
-    [key]: value,
-  });
+  emit('onUpdateQueryItem', newQuery);
 };
 
 const onRemove = () => {

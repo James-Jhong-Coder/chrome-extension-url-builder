@@ -38,12 +38,12 @@ const onRemoveQueryItemByIndex = (index: number) => {
         </div>
       </Button>
     </div>
-    <QueryList
+    <!-- <QueryList
       :fields="fields"
       :error-messages="errorMessages"
       class="mt-4"
       @onUpdateQueryItem="onUpdateQueryItem"
       @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
-    />
+    /> -->
   </div>
 </template>

@@ -7,9 +7,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'solid',
+  variant: 'outline',
   disabled: false,
 });
+
+defineEmits<{
+  click: [];
+}>();
 </script>
 
 <template>
@@ -25,5 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
   @apply leading-none;
   @apply border border-gray-430 text-gray-410 h-[2rem] px-3 rounded-lg;
   @apply cursor-pointer;
+}
+
+.box.solid {
 }
 </style>

@@ -26,7 +26,7 @@ const schema = object({
       id: string().optional(),
     }).test(
       'key-required-if-value',
-      '當 value 有值時，key 一定要有值',
+      '因為 value 有值，必須輸入 key',
       (v) => !v?.value || v.value.trim() === '' || !!v?.key?.trim()
     )
   ),

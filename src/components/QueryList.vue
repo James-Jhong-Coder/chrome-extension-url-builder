@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import QueryListItem from '@/components/QueryListItem.vue';
 import { computed } from 'vue';
 import type { QueryKeyValue } from '../types/types';
+import QueryListItem from './QueryListItem.vue';
 interface Props {
   // 從父元件帶入的 useFieldArray 回傳
   fields: Array<QueryKeyValue>;
@@ -28,16 +28,12 @@ const onRemoveQueryItemByIndex = (index: number) => {
   emit('onRemoveQueryItemByIndex', index);
 };
 </script>
-<!-- :query-item="{
-        ...item,
-        canDelete: fields.length > 1,
-      }" -->
 <template>
   <div class="query-list">
     <QueryListItem
       v-for="(item, index) in computedFields"
-      :query-item="1"
       :key="item.id"
+      :query-item="item"
       :error-message="errorMessages[index]"
       @onUpdateQueryItem="(newQuery: QueryKeyValue) => onUpdateQueryItem(index, newQuery)"
       @onRemove="() => onRemoveQueryItemByIndex(index)"
