@@ -1,7 +1,7 @@
 export interface QueryKeyValue {
-  id?: string;
-  key?: string;
-  value?: string;
+  id: string;
+  key: string;
+  value: string;
 }
 
 export interface QueryItem extends QueryKeyValue {
