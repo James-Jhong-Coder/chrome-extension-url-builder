@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Variant = 'solid' | 'outline';
+type Variant = "solid" | "outline";
 
 interface Props {
   variant?: Variant;
@@ -7,17 +7,23 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'outline',
+  variant: "outline",
   disabled: false,
 });
 
-defineEmits<{
+const emits = defineEmits<{
   click: [];
 }>();
+
+const onClickHandler = () => {
+  if (!props.disabled) {
+    emits("click");
+  }
+};
 </script>
 
 <template>
-  <div class="btn" :class="[props.variant]">
+  <div class="btn" :class="[variant, { disabled }]" @click="onClickHandler">
     <slot></slot>
   </div>
 </template>
@@ -30,6 +36,11 @@ defineEmits<{
   @apply leading-none;
   @apply text-gray-410 h-[2rem] px-3 rounded-lg;
   @apply cursor-pointer;
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  @apply cursor-not-allowed;
 }
 
 .btn.solid {
@@ -47,5 +58,9 @@ defineEmits<{
 
 .btn.outline:hover {
   @apply bg-gray-560;
+}
+
+.btn.outline.disabled:hover {
+  background: unset;
 }
 </style>
