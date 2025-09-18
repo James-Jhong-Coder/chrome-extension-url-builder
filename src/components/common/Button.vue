@@ -35,7 +35,7 @@ const onClickHandler = () => {
   @apply flex items-center;
   @apply leading-none;
   @apply text-gray-410 h-[2rem] px-3 rounded-lg;
-  @apply cursor-pointer;
+  @apply cursor-pointer select-none;
 }
 
 .btn.disabled {

@@ -2,23 +2,37 @@
 interface Props {
   generatedUrl?: string;
 }
-import { useClipboard } from '@vueuse/core';
-const { copy, text, isSupported } = useClipboard({
+import { useClipboard } from "@vueuse/core";
+const { copy, text } = useClipboard({
   legacy: true,
 });
 
 const props = defineProps<Props>();
 
 const onCopyHandler = async () => {
-  console.log('enter!!!');
+  console.log("enter!!!");
   try {
-    await copy('dsdadsdf');
-    console.log('複製成功:', text.value);
+    await copy(props.generatedUrl || "");
+    console.log("複製成功:", text.value);
   } catch (e) {
-    console.error('複製失敗', e);
+    console.error("複製失敗", e);
   }
+};
 
-  // copy('dsdadsdf' || '');
+const onOpenHandler = () => {
+  if (props.generatedUrl) {
+    window.open(props.generatedUrl, "_blank", "noopener,noreferrer");
+  } else {
+    console.warn("沒有可用的 URL");
+  }
+};
+
+const emits = defineEmits<{
+  onClose: [];
+}>();
+
+const onClosePanelHandler = () => {
+  emits("onClose");
 };
 </script>
 
@@ -26,14 +40,14 @@ const onCopyHandler = async () => {
   <div class="flex flex-col">
     <div class="flex items-center">
       <span>生成的 URL</span>
-      <div class="icon-close-box ml-auto">
+      <div class="icon-close-box ml-auto" @click="onClosePanelHandler">
         <SvgIcon name="icon_close" class="w-4 h-4" />
       </div>
     </div>
-    <GeneralInput :model-value="generatedUrl" disabled class="mt-4" />
-    <div class="flex items-center mt-2">
+    <GeneralInput :model-value="generatedUrl" disabled class="mt-2" />
+    <div class="flex items-center mt-3">
       <Button @click="onCopyHandler">複製</Button>
-      <Button class="ml-2">開啟</Button>
+      <Button class="ml-2" @click="onOpenHandler">開啟</Button>
     </div>
   </div>
 </template>

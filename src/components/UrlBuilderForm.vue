@@ -113,6 +113,10 @@ const subscription = submit$
   });
 
 onUnmounted(() => subscription.unsubscribe());
+
+const onCloseResultPanelHandler = () => {
+  generatedUrl.value = "";
+};
 </script>
 
 <template>
@@ -139,7 +143,11 @@ onUnmounted(() => subscription.unsubscribe());
     <Button class="mt-5" @click="onSubmit" variant="solid">
       <div class="flex justify-center w-full">生成 URL</div>
     </Button>
-    <ResultPanel v-if="generatedUrl" class="mt-5" />
+    <ResultPanel
+      class="mt-5"
+      :generated-url="generatedUrl"
+      @on-close="onCloseResultPanelHandler"
+    />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { BaseFieldProps } from 'vee-validate';
-import { computed, type Ref } from 'vue';
+import type { BaseFieldProps } from "vee-validate";
+import { computed, type Ref } from "vue";
 type VeeValidateAttrs =
   | Ref<BaseFieldProps & Record<string, unknown>>
   | (BaseFieldProps & Record<string, unknown>);
@@ -8,7 +8,7 @@ type VeeValidateAttrs =
 interface InputProps {
   modelValue?: string | number;
   name?: string;
-  type?: 'text';
+  type?: "text";
   placeholder?: string;
   disabled?: boolean;
   errorMessage?: string;
@@ -17,18 +17,18 @@ interface InputProps {
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
-  modelValue: '',
-  type: 'text',
+  modelValue: "",
+  type: "text",
   veeValidateAttrs: () => ({} as any),
 });
 
 const emit = defineEmits<{
-  'update:modelValue': [val: string];
+  "update:modelValue": [val: string];
 }>();
 
 const onInput = (e: Event) => {
   const val = (e.target as HTMLInputElement).value;
-  emit('update:modelValue', val);
+  emit("update:modelValue", val);
 };
 const hasError = computed(() => {
   return !!props.errorMessage;
@@ -41,12 +41,15 @@ const hasError = computed(() => {
       class="input-box"
       :class="{
         'has-error': hasError,
+        disabled,
       }"
     >
       <input
         :type="type"
         v-bind="veeValidateAttrs"
         :placeholder="placeholder"
+        :disabled="disabled"
+        :value="modelValue"
         class="input"
         @input="onInput"
       />
@@ -81,5 +84,13 @@ const hasError = computed(() => {
 
 .input-box.has-error {
   @apply border-red-600;
+}
+
+.input-box.disabled {
+  @apply bg-gray-680;
+  @apply cursor-not-allowed;
+}
+.input-box.disabled:focus-within {
+  @apply bg-gray-680;
 }
 </style>
