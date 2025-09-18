@@ -17,20 +17,35 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="box" :class="[props.variant]">
+  <div class="btn" :class="[props.variant]">
     <slot></slot>
   </div>
 </template>
 
 <style scoped>
 @reference "@/styles/global.css";
-.box {
+
+.btn {
   @apply flex items-center;
   @apply leading-none;
-  @apply border border-gray-430 text-gray-410 h-[2rem] px-3 rounded-lg;
+  @apply text-gray-410 h-[2rem] px-3 rounded-lg;
   @apply cursor-pointer;
 }
 
-.box.solid {
+.btn.solid {
+  @apply bg-gray-650;
+  @apply text-white;
+}
+
+.btn.solid:hover {
+  @apply bg-gray-630;
+}
+
+.btn.outline {
+  @apply border border-gray-430;
+}
+
+.btn.outline:hover {
+  @apply bg-gray-560;
 }
 </style>
