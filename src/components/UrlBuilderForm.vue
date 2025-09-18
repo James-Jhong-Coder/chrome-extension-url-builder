@@ -75,6 +75,7 @@ const onSubmit = handleSubmit((values) => {});
 <template>
   <div class="box p-6">
     <h2 class="box-title">URL Builder</h2>
+    {{ errors }}
     <div class="flex flex-col mt-4">
       <span class="text-gray-410">Domain</span>
       <GeneralInput

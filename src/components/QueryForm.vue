@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import QueryList from '@/components/QueryList.vue';
-import type { QueryKeyValue } from '../types/types';
+import QueryList from "@/components/QueryList.vue";
+import type { QueryKeyValue } from "../types/types";
 interface Props {
-  // 從父元件帶入的 useFieldArray 回傳
   fields: Array<QueryKeyValue>;
   errorMessages: string[];
 }
@@ -15,15 +14,15 @@ const emits = defineEmits<{
 }>();
 
 const onAddNewQueryKey = () => {
-  emits('onAddNewQueryKey');
+  emits("onAddNewQueryKey");
 };
 
 const onUpdateQueryItem = (index: number, newQuery: QueryKeyValue) => {
-  emits('onUpdateQueryItem', index, newQuery);
+  emits("onUpdateQueryItem", index, newQuery);
 };
 
 const onRemoveQueryItemByIndex = (index: number) => {
-  emits('onRemoveQueryItemByIndex', index);
+  emits("onRemoveQueryItemByIndex", index);
 };
 </script>
 
@@ -38,12 +37,12 @@ const onRemoveQueryItemByIndex = (index: number) => {
         </div>
       </Button>
     </div>
-    <!-- <QueryList
+    <QueryList
       :fields="fields"
       :error-messages="errorMessages"
       class="mt-4"
       @onUpdateQueryItem="onUpdateQueryItem"
       @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
-    /> -->
+    />
   </div>
 </template>

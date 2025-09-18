@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { QueryKeyValue } from '../types/types';
-import QueryListItem from './QueryListItem.vue';
+import { computed } from "vue";
+import type { QueryKeyValue } from "../types/types";
+import QueryListItem from "./QueryListItem.vue";
 interface Props {
   // 從父元件帶入的 useFieldArray 回傳
   fields: Array<QueryKeyValue>;
@@ -22,10 +22,10 @@ const emit = defineEmits<{
 }>();
 
 const onUpdateQueryItem = (index: number, newQuery: QueryKeyValue) => {
-  emit('onUpdateQueryItem', index, newQuery);
+  emit("onUpdateQueryItem", index, newQuery);
 };
 const onRemoveQueryItemByIndex = (index: number) => {
-  emit('onRemoveQueryItemByIndex', index);
+  emit("onRemoveQueryItemByIndex", index);
 };
 </script>
 <template>
