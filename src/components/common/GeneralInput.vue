@@ -90,6 +90,10 @@ const hasError = computed(() => {
   @apply bg-gray-680;
   @apply cursor-not-allowed;
 }
+.input-box.disabled .input {
+  @apply bg-gray-680;
+  @apply cursor-not-allowed;
+}
 .input-box.disabled:focus-within {
   @apply bg-gray-680;
 }
