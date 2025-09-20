@@ -18,8 +18,8 @@ const schema = object({
   hostName: string()
     .required('Domain 為必填')
     .matches(
-      /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/.*)?$/i,
-      '請輸入正確的 Domain'
+      /^(https?:\/\/)?((([a-z0-9-]+\.)+[a-z]{2,})|(\d{1,3}(\.\d{1,3}){3}))(:\d+)?(\/.*)?$/i,
+      '請輸入正確的 Domain 或 IP'
     ),
   queries: array().of(
     object({
@@ -134,30 +134,16 @@ watch(
     <h2 class="box-title">URL Builder</h2>
     <div class="flex flex-col mt-4">
       <span class="text-gray-410">Domain</span>
-      <GeneralInput
-        v-model="hostName"
-        :vee-validate-attrs="hostNameAttrs"
-        placeholder="要寫完整的連結 例如 : https://example.com/"
-        :error-message="errors['hostName']"
-        class="mt-2"
-      />
+      <GeneralInput v-model="hostName" :vee-validate-attrs="hostNameAttrs"
+        placeholder="要寫完整的連結 例如 : https://example.com/" :error-message="errors['hostName']" class="mt-2" />
     </div>
-    <QueryForm
-      class="mt-5"
-      :fields="computedFields"
-      :errorMessages="queriesErrorMessages"
-      @onAddNewQueryKey="onAddNewQueryKey"
-      @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
-      @onUpdateQueryItem="onUpdateQueryItem"
-    />
+    <QueryForm class="mt-5" :fields="computedFields" :errorMessages="queriesErrorMessages"
+      @onAddNewQueryKey="onAddNewQueryKey" @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
+      @onUpdateQueryItem="onUpdateQueryItem" />
     <Button class="mt-5" @click="onSubmit" variant="solid">
       <div class="flex justify-center w-full">生成 URL</div>
     </Button>
-    <ResultPanel
-      class="mt-5"
-      :generated-url="generatedUrl"
-      @on-close="onCloseResultPanelHandler"
-    />
+    <ResultPanel class="mt-5" :generated-url="generatedUrl" @on-close="onCloseResultPanelHandler" />
   </div>
 </template>
 

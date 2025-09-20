@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<Props>(), {});
 
 <template>
   <svg aria-hidden="true" class="svg-icon">
-    <use :xlink:href="`#icon-${props.name}`" />
+    <use :href="`#icon-${props.name}`" />
   </svg>
 </template>
 
