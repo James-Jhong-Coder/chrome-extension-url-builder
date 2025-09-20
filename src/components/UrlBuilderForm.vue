@@ -7,11 +7,7 @@ import type { QueryKeyValue } from '@/types/types';
 import { computed, onUnmounted, ref, watch } from 'vue';
 import ResultPanel from './ResultPanel.vue';
 import { Subject, of, map, catchError } from 'rxjs';
-import {
-  saveFormValues,
-  loadFormValues,
-  clearFormValues,
-} from '@/hook/useStorage'; // ← 剛剛的工具
+import { saveFormValues, loadFormValues } from '@/hook/useStorage'; // ← 剛剛的工具
 
 interface FormValues {
   hostName: string;
