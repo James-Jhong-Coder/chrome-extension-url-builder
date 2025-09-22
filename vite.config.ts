@@ -1,7 +1,44 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+import Components from 'unplugin-vue-components/vite';
+import tailwindcss from '@tailwindcss/vite';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { copyFileSync } from "fs";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-})
+  plugins: [
+    vue(),
+    Components({
+      dirs: ['src/components/common'],
+      dts: 'src/components.d.ts',
+    }),
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+      symbolId: 'icon-[dir]-[name]',
+    }),
+    tailwindcss(),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'), // 讓 @ 指向 src
+      '@components': path.resolve(__dirname, 'src/components'), // 自訂
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [
+        {
+          name: "copy-manifest-and-bg",
+          closeBundle() {
+            copyFileSync("manifest.json", "dist/manifest.json");
+            copyFileSync("background.js", "dist/background.js");
+          },
+        },
+      ],
+    },
+    outDir: "dist",
+    emptyOutDir: true,
+  }
+});
