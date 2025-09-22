@@ -4,7 +4,7 @@ import { object, string, array } from 'yup';
 import QueryForm from '@/components/QueryForm.vue';
 import { v4 as uuidv4 } from 'uuid';
 import type { QueryKeyValue } from '@/types/types';
-import { computed, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import ResultPanel from './ResultPanel.vue';
 import { Subject, of, map, catchError } from 'rxjs';
 import { saveFormValues, loadFormValues } from '@/hook/useStorage'; // ← 剛剛的工具
@@ -79,6 +79,10 @@ const onSubmit = handleSubmit((values) => {
   submit$.next(values);
 });
 
+onMounted(() => {
+  onSubmit();
+});
+
 const normalizeHost = map<FormValues, FormValues>((v) => {
   const hasScheme = /^https?:\/\//i.test(v.hostName);
   return { ...v, hostName: hasScheme ? v.hostName : `https://${v.hostName}` };
@@ -134,16 +138,30 @@ watch(
     <h2 class="box-title">URL Builder</h2>
     <div class="flex flex-col mt-4">
       <span class="text-gray-410">Domain</span>
-      <GeneralInput v-model="hostName" :vee-validate-attrs="hostNameAttrs"
-        placeholder="要寫完整的連結 例如 : https://example.com/" :error-message="errors['hostName']" class="mt-2" />
+      <GeneralInput
+        v-model="hostName"
+        :vee-validate-attrs="hostNameAttrs"
+        placeholder="要寫完整的連結 例如 : https://example.com/"
+        :error-message="errors['hostName']"
+        class="mt-2"
+      />
     </div>
-    <QueryForm class="mt-5" :fields="computedFields" :errorMessages="queriesErrorMessages"
-      @onAddNewQueryKey="onAddNewQueryKey" @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
-      @onUpdateQueryItem="onUpdateQueryItem" />
+    <QueryForm
+      class="mt-5"
+      :fields="computedFields"
+      :errorMessages="queriesErrorMessages"
+      @onAddNewQueryKey="onAddNewQueryKey"
+      @onRemoveQueryItemByIndex="onRemoveQueryItemByIndex"
+      @onUpdateQueryItem="onUpdateQueryItem"
+    />
     <Button class="mt-5" @click="onSubmit" variant="solid">
       <div class="flex justify-center w-full">生成 URL</div>
     </Button>
-    <ResultPanel class="mt-5" :generated-url="generatedUrl" @on-close="onCloseResultPanelHandler" />
+    <ResultPanel
+      class="mt-5"
+      :generated-url="generatedUrl"
+      @on-close="onCloseResultPanelHandler"
+    />
   </div>
 </template>
 
